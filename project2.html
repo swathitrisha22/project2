@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Password Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f0f0f0;
+    }
+    .container {
+      max-width: 500px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      margin: 10px 0 5px;
+    }
+    input[type="number"] {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+    }
+    button {
+      background: #007BFF;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    #result {
+      margin-top: 15px;
+      font-weight: bold;
+      word-wrap: break-word;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Password Generator</h2>
+    <label for="length">Password Length:</label>
+    <input type="number" id="length" value="12" min="4" max="50">
+
+    <label><input type="checkbox" id="upper" checked> Include Uppercase Letters</label>
+    <label><input type="checkbox" id="lower" checked> Include Lowercase Letters</label>
+    <label><input type="checkbox" id="digits" checked> Include Digits</label>
+    <label><input type="checkbox" id="special" checked> Include Special Characters</label>
+
+    <button onclick="generatePassword()">Generate Password</button>
+
+    <p id="result"></p>
+  </div>
+
+  <script>
+    function generatePassword() {
+      const length = document.getElementById('length').value;
+      const useUpper = document.getElementById('upper').checked;
+      const useLower = document.getElementById('lower').checked;
+      const useDigits = document.getElementById('digits').checked;
+      const useSpecial = document.getElementById('special').checked;
+
+      const upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      const lower = "abcdefghijklmnopqrstuvwxyz";
+      const digits = "0123456789";
+      const special = "!@#$%^&*()_+[]{}|;:,.<>?";
+
+      let chars = "";
+      if (useUpper) chars += upper;
+      if (useLower) chars += lower;
+      if (useDigits) chars += digits;
+      if (useSpecial) chars += special;
+
+      if (chars === "") {
+        document.getElementById("result").innerText = "Please select at least one character type.";
+        return;
+      }
+
+      let password = "";
+      for (let i = 0; i < length; i++) {
+        password += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+
+      document.getElementById("result").innerText = password;
+    }
+  </script>
+</body>
+</html>
